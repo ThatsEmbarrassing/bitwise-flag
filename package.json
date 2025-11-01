@@ -1,0 +1,40 @@
+{
+  "name": "bitwise-flag",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "./dist/*.js",
+    "./dist/*.d.ts",
+    "./README.md",
+    "./LICENSE.md",
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "author": "Ember",
+  "scripts": {
+    "build": "bunup"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.1",
+    "bunup": "^0.15.13"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
