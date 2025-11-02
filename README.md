@@ -106,8 +106,8 @@ Represents a bitwise combination of flags from a registry. All operations are im
 |--------|-------------|------------|---------|--------|
 | `isEmpty()` | Checks if no flags are set. | None. | `boolean` | None. |
 | `has(flagName: TFlags)` | Tests if a specific flag is set in this combination. | `flagName`: The flag key. | `boolean` | None. |
-| `add(flagName: TFlags)` | Adds a flag to the combination (idempotent if already set). Returns a new `Flag`. | `flagName`: The flag key. | `Flag<TFlags>` | `Error` if the key is not registered. |
-| `remove(flagName: TFlags)` | Removes a flag from the combination (idempotent if not set). Returns a new `Flag`. | `flagName`: The flag key. | `Flag<TFlags>` | `Error` if the key is not registered. |
+| `add(...flagNames: TFlags[])` | Adds flags to the combination (idempotent if already set). Returns `IFlag`. | `flagNames`: The flag keys. | `IFlag<TFlags>` | `Error` if the key is not registered. |
+| `remove(...flagNames: TFlags[])` | Removes flags from the combination (idempotent if not set). Returns `IFlag`. | `flagNames`: The flag keys. | `IFlag<TFlags>` | `Error` if the key is not registered. |
 | `toString()` | Returns a string representation including the alias and raw value. | None. | `string` | None. |
 | `alias` (getter) | Computed human-readable alias (e.g., `"[READ+WRITE]"` or `"EMPTY_FLAG"`) | None. | `string` | None. |
 

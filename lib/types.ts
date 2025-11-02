@@ -7,8 +7,8 @@ export interface IFlag<TFlags extends FlagKey> {
   isEmpty(): boolean;
   has(flagName: TFlags): boolean;
 
-  add(flagName: TFlags): IFlag<TFlags>;
-  remove(flagName: TFlags): IFlag<TFlags>;
+  add(...flagNames: TFlags[]): IFlag<TFlags>;
+  remove(...flagNames: TFlags[]): IFlag<TFlags>;
 
   toString(): string;
 }
