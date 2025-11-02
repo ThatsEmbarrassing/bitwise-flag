@@ -2,6 +2,7 @@ export type FlagKey = string;
 
 export interface IFlag<TFlags extends FlagKey> {
   readonly value: bigint;
+  readonly alias: string;
 
   isEmpty(): boolean;
   has(flagName: TFlags): boolean;
