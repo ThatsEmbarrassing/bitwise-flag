@@ -39,7 +39,7 @@ export class FlagsRegistry<TFlags extends FlagKey>
     return new Flag(this, 0n);
   }
 
-  combine(...flagKeys: TFlags[]): Flag<TFlags> {
+  combine(...flagKeys: TFlags[]): IFlag<TFlags> {
     const value = flagKeys.reduce((acc, key) => {
       const flagValue = this.get(key);
 

@@ -12,7 +12,7 @@ The library is type-safe, supports immutable flag operations, and provides human
 npm install bitwise-flag # npm
 yarn add bitwise-flag # yarn
 pnpm add bitwise-flag # pnpm
-ban add bitwise-flag # bun
+bun add bitwise-flag # bun
 ```
 
 ---
