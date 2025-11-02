@@ -51,13 +51,13 @@ export class Flag<TFlags extends FlagKey> implements IFlag<TFlags> {
   }
 
   remove(flagName: TFlags): IFlag<TFlags> {
-    if (!this.has(flagName)) return this;
-
     const value = this.context.get(flagName);
 
     if (!value) {
       throw new Error(`Flag with key ${String(flagName)} is not found.`);
     }
+
+    if (!this.has(flagName)) return this;
 
     const extractedValue = this.value & ~value;
 
