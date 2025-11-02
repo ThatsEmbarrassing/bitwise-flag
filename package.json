@@ -28,7 +28,8 @@
   },
   "author": "Ember",
   "scripts": {
-    "build": "bunup"
+    "build": "bunup",
+    "tests": "bun test"
   },
   "devDependencies": {
     "@types/bun": "^1.3.1",
