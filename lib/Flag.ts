@@ -19,7 +19,7 @@ export class Flag<TFlags extends FlagKey> implements IFlag<TFlags> {
 
   constructor(
     private context: IFlagsRegistry<TFlags>,
-    public readonly value: bigint
+    public readonly value: bigint,
   ) {
     this.validate(value);
   }
