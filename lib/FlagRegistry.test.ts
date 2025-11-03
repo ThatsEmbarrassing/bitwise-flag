@@ -122,6 +122,70 @@ describe("FlagRegistry", () => {
     });
   });
 
+  describe("parse", () => {
+    it("should parse number values", () => {
+      const flagA = registry.parse(1); // decimal
+      const flagCD = registry.parse(0b1100); // binary
+      const flagBC = registry.parse(0x6); // hex
+      const flagBCD = registry.parse(0o16); // octal
+
+      expect(flagA.has("__FLAG_A__")).toBeTrue();
+
+      expect(flagCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagCD.has("__FLAG_D__")).toBeTrue();
+
+      expect(flagBC.has("__FLAG_B__")).toBeTrue();
+      expect(flagBC.has("__FLAG_C__")).toBeTrue();
+
+      expect(flagBCD.has("__FLAG_B__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_D__")).toBeTrue();
+    });
+
+    it("should parse bigint values", () => {
+      const flagA = registry.parse(1n); // decimal
+      const flagCD = registry.parse(0b1100n); // binary
+      const flagBC = registry.parse(0x6n); // hex
+      const flagBCD = registry.parse(0o16n); // octal
+
+      expect(flagA.has("__FLAG_A__")).toBeTrue();
+
+      expect(flagCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagCD.has("__FLAG_D__")).toBeTrue();
+
+      expect(flagBC.has("__FLAG_B__")).toBeTrue();
+      expect(flagBC.has("__FLAG_C__")).toBeTrue();
+
+      expect(flagBCD.has("__FLAG_B__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_D__")).toBeTrue();
+    });
+
+    it("should parse string values", () => {
+      const flagA = registry.parse("1", 10); // decimal
+      const flagCD = registry.parse("1100", 2); // binary
+      const flagBC = registry.parse("6", 16); // hex
+      const flagBCD = registry.parse("16", 8); // octal
+      const flagACD = registry.parse("111", 3); // any other radix from 2 to 32 (ex.: ternary)
+
+      expect(flagA.has("__FLAG_A__")).toBeTrue();
+
+      expect(flagCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagCD.has("__FLAG_D__")).toBeTrue();
+
+      expect(flagBC.has("__FLAG_B__")).toBeTrue();
+      expect(flagBC.has("__FLAG_C__")).toBeTrue();
+
+      expect(flagBCD.has("__FLAG_B__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_D__")).toBeTrue();
+
+      expect(flagACD.has("__FLAG_A__")).toBeTrue();
+      expect(flagACD.has("__FLAG_C__")).toBeTrue();
+      expect(flagACD.has("__FLAG_D__")).toBeTrue();
+    });
+  });
+
   describe("iterators", () => {
     describe("keys()", () => {
       it("should return all flag names", () => {

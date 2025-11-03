@@ -39,6 +39,23 @@ export class FlagsRegistry<TFlags extends FlagKey>
     return new Flag(this, 0n);
   }
 
+  parse(value: number): IFlag<TFlags>;
+  parse(value: bigint): IFlag<TFlags>;
+  parse(value: string, radix?: number): IFlag<TFlags>;
+  parse(value: string | number | bigint, radix?: number): IFlag<TFlags> {
+    if (typeof value === "bigint") return new Flag(this, value);
+
+    if (typeof value === "number") return new Flag(this, BigInt(value));
+
+    const parsedValue = parseInt(value, radix);
+
+    if (isNaN(parsedValue)) {
+      throw new Error(`Cannot parse value ${value} with radix ${radix ?? 10}.`);
+    }
+
+    return new Flag(this, BigInt(parsedValue));
+  }
+
   combine(...flagKeys: TFlags[]): IFlag<TFlags> {
     const value = flagKeys.reduce((acc, key) => {
       const flagValue = this.get(key);

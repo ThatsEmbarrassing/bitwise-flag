@@ -22,4 +22,8 @@ export interface IFlagsRegistry<TFlags extends FlagKey> {
   entries(): MapIterator<[TFlags, bigint]>;
 
   empty(): IFlag<TFlags>;
+
+  parse(value: number): IFlag<TFlags>;
+  parse(value: bigint): IFlag<TFlags>;
+  parse(value: string, radix?: number): IFlag<TFlags>;
 }
