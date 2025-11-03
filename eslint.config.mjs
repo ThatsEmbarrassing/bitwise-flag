@@ -15,7 +15,7 @@ export default defineConfig(
     rules: {
       "no-unused-vars": "off",
       "@stylistic/quotes": ["error", "double"],
-      "@stylistic/always-multiline": ["error", "always-multiline"],
+      "@stylistic/comma-dangle": ["error", "always-multiline"],
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
