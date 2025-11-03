@@ -33,7 +33,9 @@
   "author": "Ember",
   "scripts": {
     "build": "bunup",
-    "tests": "bun test"
+    "tests": "bun test",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "devDependencies": {
     "@types/bun": "^1.3.1",
