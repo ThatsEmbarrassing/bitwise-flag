@@ -1,6 +1,6 @@
 {
   "name": "bitwise-flag",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "license": "MIT",
   "files": [
@@ -10,6 +10,10 @@
     "./LICENSE.md",
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThatsEmbarrassing/bitwise-flag"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

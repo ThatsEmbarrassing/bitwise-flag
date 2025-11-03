@@ -79,6 +79,16 @@ describe("Flag", () => {
       expect(flagAB.has("__FLAG_B__")).toBeTrue();
     });
 
+    it("should add multiple flags to existing combination", () => {
+      const flagBCD = flagB.add("__FLAG_C__", "__FLAG_D__");
+
+      // __FLAG_B__ | __FLAG_C__ | __FLAG_D__ = 2 | 4 | 8 = 14
+      expect(flagBCD.value).toBe(14n);
+      expect(flagBCD.has("__FLAG_B__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagBCD.has("__FLAG_D__")).toBeTrue();
+    });
+
     it("should return same instance if flag already exists", () => {
       const sameFlag = flagB.add("__FLAG_B__");
 
@@ -102,35 +112,36 @@ describe("Flag", () => {
   });
 
   describe("remove()", () => {
-    const flagBC = registry.combine("__FLAG_B__", "__FLAG_C__");
+    const flagBCD = registry.combine("__FLAG_B__", "__FLAG_C__", "__FLAG_D__");
 
     it("should remove flag from combination", () => {
-      const flagC = flagBC.remove("__FLAG_B__");
+      const flagCD = flagBCD.remove("__FLAG_B__");
 
-      expect(flagC.value).toBe(4n);
-      expect(flagC.has("__FLAG_C__")).toBeTrue();
-      expect(flagC.has("__FLAG_B__")).toBeFalse();
+      // __FLAG_C__ | __FLAG_D__ = 4 | 8 = 12
+      expect(flagCD.value).toBe(12n);
+      expect(flagCD.has("__FLAG_C__")).toBeTrue();
+      expect(flagCD.has("__FLAG_B__")).toBeFalse();
     });
 
     it("should return same instance if flag not present", () => {
-      const sameFlag = flagBC.remove("__FLAG_D__");
+      const sameFlag = flagBCD.remove("__FLAG_A__");
 
-      expect(flagBC).toBe(sameFlag);
+      expect(flagBCD).toBe(sameFlag);
     });
 
     it("should throw error when removing non-existent flag", () => {
       expect(() => {
         // @ts-expect-error this flag is not exist
-        flagBC.remove("__NON_EXISTENT_FLAG__");
+        flagBCD.remove("__NON_EXISTENT_FLAG__");
       }).toThrow("Flag with key __NON_EXISTENT_FLAG__ is not found.");
     });
 
     it("should be immutable - original flag unchanged", () => {
-      const originalValue = flagBC.value;
-      flagBC.remove("__FLAG_B__");
+      const originalValue = flagBCD.value;
+      flagBCD.remove("__FLAG_B__");
 
-      expect(flagBC.value).toBe(originalValue);
-      expect(flagBC.has("__FLAG_B__")).toBeTrue();
+      expect(flagBCD.value).toBe(originalValue);
+      expect(flagBCD.has("__FLAG_B__")).toBeTrue();
     });
   });
 

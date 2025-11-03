@@ -36,30 +36,38 @@ export class Flag<TFlags extends FlagKey> implements IFlag<TFlags> {
     return !!(this.value & value);
   }
 
-  add(flagName: TFlags): IFlag<TFlags> {
-    if (this.has(flagName)) return this;
+  add(...flagNames: TFlags[]): IFlag<TFlags> {
+    const combinedValue = flagNames.reduce((acc, name) => {
+      if (this.has(name)) return acc;
 
-    const value = this.context.get(flagName);
+      const value = this.context.get(name);
 
-    if (!value) {
-      throw new Error(`Flag with key ${String(flagName)} is not found.`);
-    }
+      if (!value) {
+        throw new Error(`Flag with key ${String(name)} is not found.`);
+      }
 
-    const combinedValue = this.value | value;
+      return acc | value;
+    }, this.value);
+
+    if (combinedValue === this.value) return this;
 
     return new Flag(this.context, combinedValue);
   }
 
-  remove(flagName: TFlags): IFlag<TFlags> {
-    const value = this.context.get(flagName);
+  remove(...flagNames: TFlags[]): IFlag<TFlags> {
+    const extractedValue = flagNames.reduce((acc, name) => {
+      const value = this.context.get(name);
 
-    if (!value) {
-      throw new Error(`Flag with key ${String(flagName)} is not found.`);
-    }
+      if (!value) {
+        throw new Error(`Flag with key ${String(name)} is not found.`);
+      }
 
-    if (!this.has(flagName)) return this;
+      if (!this.has(name)) return acc;
 
-    const extractedValue = this.value & ~value;
+      return acc & ~value;
+    }, this.value);
+
+    if (extractedValue === this.value) return this;
 
     return new Flag(this.context, extractedValue);
   }

@@ -7,8 +7,8 @@ export interface IFlag<TFlags extends FlagKey> {
   isEmpty(): boolean;
   has(flagName: TFlags): boolean;
 
-  add(flagName: TFlags): IFlag<TFlags>;
-  remove(flagName: TFlags): IFlag<TFlags>;
+  add(...flagNames: TFlags[]): IFlag<TFlags>;
+  remove(...flagNames: TFlags[]): IFlag<TFlags>;
 
   toString(): string;
 }
@@ -22,4 +22,8 @@ export interface IFlagsRegistry<TFlags extends FlagKey> {
   entries(): MapIterator<[TFlags, bigint]>;
 
   empty(): IFlag<TFlags>;
+
+  parse(value: number): IFlag<TFlags>;
+  parse(value: bigint): IFlag<TFlags>;
+  parse(value: string, radix?: number): IFlag<TFlags>;
 }
