@@ -1,5 +1,7 @@
 <h1 align="center">bitwise-flag</h1>
 
+[Documentation](https://thatsembarrassing.github.io/bitwise-flag/)
+
 A lightweight TypeScript library for managing bitwise flags. This allows efficient storage, combination, and manipulation of multiple boolean flags in a single value, ideal for permissions, states, or configuration bitmasks. Each flag key is assigned a unique bit position, enabling operations like checking, adding, and removing flags without performance overhead.
 
 The library is type-safe, supports immutable flag operations, and provides human-readable string aliases for debugging.
