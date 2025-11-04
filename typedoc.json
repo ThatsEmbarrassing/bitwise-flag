@@ -1,0 +1,21 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "name": "bitwise-flag",
+    "entryPoints": [
+        "lib/index.ts",
+        "lib/Flag.ts",
+        "lib/FlagRegistry.ts",
+    ],
+    "theme": "hierarchy",
+    "plugin": [
+        "typedoc-theme-hierarchy",
+        "typedoc-plugin-extras"
+    ],
+    "out": "docs",
+    "gitRevision": "main",
+    "footerLastModified": true,
+    "includeVersion": true,
+    "excludePrivate": true,
+    "excludeExternals": true,
+    "sourceLinkTemplate": "https://github.com/ThatsEmbarrassing/bitwise-flag/blob/{gitRevision}/{path}#L{line}"
+}

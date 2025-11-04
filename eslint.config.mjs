@@ -25,4 +25,5 @@ export default defineConfig(
   },
   globalIgnores(["dist/**/*"], "Ignore build directory"),
   globalIgnores(["**/*.test.*"], "Ignore test files"),
+  globalIgnores(["docs/**/*"], "Ignore documentation files"),
 );
