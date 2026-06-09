@@ -3,6 +3,17 @@
   "version": "2.0.0",
   "type": "module",
   "sideEffects": false,
+  "description": "Type-safe, immutable bitwise flags for TypeScript — with named flags, human-readable aliases, and tree-shakeable operators. ",
+  "keywords": [
+    "bitwise",
+    "bitmask",
+    "flags",
+    "bitfield",
+    "typescript",
+    "bitwise-flags",
+    "permissions"
+  ],
+  "homepage": "https://thatsembarrassing.github.io/bitwise-flag",
   "files": [
     "./dist/*.js",
     "./dist/*.d.ts",
