@@ -68,11 +68,15 @@ describe("Repository", () => {
       expect(repo.has("write")).toBe(false);
     });
 
-    test("returns false for a flag whose stored value is 0 (falsy coercion)", () => {
-      // input: map { "zero" => 0 } — has() uses !!value, so 0 is treated as absent
-      // NOTE: this documents the current behaviour; callers must not register 0-valued flags
-      const repo = new Repository<"zero", number>(new Map([["zero", 0]]));
-      expect(repo.has("zero")).toBe(false);
+    test("returns true for a registered flag whose stored value is falsy (0 / 0n)", () => {
+      // Regression guard: presence must depend on key registration, not on the bit
+      // value being truthy. The old `!!value` check wrongly reported 0-valued flags
+      // as absent; has() now delegates to Map.has().
+      const numberRepo = new Repository<"zero", number>(new Map([["zero", 0]]));
+      expect(numberRepo.has("zero")).toBe(true);
+
+      const bigintRepo = new Repository<"zero", bigint>(new Map([["zero", 0n]]));
+      expect(bigintRepo.has("zero")).toBe(true);
     });
 
     test("returns false for an empty-string key that is not registered", () => {
