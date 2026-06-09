@@ -49,9 +49,7 @@ export class Repository<TFlags extends string, TBit extends Bit> {
    */
   has(flag: string): boolean;
   has(flag: string): boolean {
-    const value = this.flags.get(flag as TFlags);
-
-    return !!value;
+    return this.flags.has(flag as TFlags);
   }
 
   /** Returns all registered flag names. */
