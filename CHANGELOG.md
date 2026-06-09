@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.1
+
+### Patch Changes
+
+- cc8f98d: Set minimal engines.node version to 22 (LTS).
+- 0b800dd: Change GITHUB_TOKEN to fine-granted RELEASE_TOKEN
+- 19ca804: Fix `Repository.has()` to report presence by key registration instead of coercing the stored bit value, so flags with a falsy (`0` / `0n`) value are no longer treated as absent.
+- b2340de: Fix package metadata; add sideEffects, commitlint and git hooks; normalize repository URL
+- 91de837: Add npm discoverability metadata: `description`, `keywords` and `homepage`.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
@@ -233,10 +243,10 @@ import { NumberFlagRegistry } from "bitwise-flag";
 
 // Without branding — structurally identical, so flags are interchangeable
 const filePerms = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
-const netPerms  = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
+const netPerms = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
 
 type FileFlag = ReturnType<typeof filePerms.of>;
-type NetFlag  = ReturnType<typeof netPerms.of>;
+type NetFlag = ReturnType<typeof netPerms.of>;
 
 declare function applyFilePerms(f: FileFlag): void;
 applyFilePerms(netPerms.of("READ")); // compiles — no protection
@@ -253,7 +263,7 @@ const netPerms2 = NumberFlagRegistry.from<
 >("READ", "WRITE", "EXECUTE");
 
 type FileFlag2 = ReturnType<typeof filePerms2.of>;
-type NetFlag2  = ReturnType<typeof netPerms2.of>;
+type NetFlag2 = ReturnType<typeof netPerms2.of>;
 
 declare function applyFilePerms2(f: FileFlag2): void;
 applyFilePerms2(netPerms2.of("READ")); // compile error — brands do not match
@@ -268,7 +278,7 @@ or share it across module boundaries:
 ```ts
 // Reusable branded type aliases
 type FileFlag = Flag<"READ" | "WRITE" | "EXECUTE", number, "FilePerms">;
-type NetFlag  = Flag<"READ" | "WRITE" | "EXECUTE", number, "NetPerms">;
+type NetFlag = Flag<"READ" | "WRITE" | "EXECUTE", number, "NetPerms">;
 ```
 
 ### Renamed properties and methods
