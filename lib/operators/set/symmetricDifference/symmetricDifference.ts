@@ -22,11 +22,15 @@ import type { Flag } from "@/flags/types";
  * symmetricDifference(registry.of("read", "write"), registry.of("write", "execute"), registry.of("execute", "admin"));
  * // → { read, admin }   ("write" in boxes 1+2, "execute" in boxes 2+3 → both removed)
  */
-export function symmetricDifference<TFlags extends string, TBit extends Bit>(
-  left: Flag<TFlags, TBit>,
-  right: Flag<TFlags, TBit>,
-  ...rest: Flag<TFlags, TBit>[]
-) {
+export function symmetricDifference<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(
+  left: Flag<TFlags, TBit, TBrand>,
+  right: Flag<TFlags, TBit, TBrand>,
+  ...rest: Flag<TFlags, TBit, TBrand>[]
+): Flag<TFlags, TBit, TBrand> {
   assertSameRegistry(left, right, ...rest);
 
   const { combinator } = left.registry;

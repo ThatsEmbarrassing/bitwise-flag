@@ -19,7 +19,7 @@ import type { Flag } from "@/flags/types";
 export function isSubsetOf<TFlags extends string, TBit extends Bit>(
   left: Flag<TFlags, TBit>,
   right: Flag<TFlags, TBit>,
-) {
+): boolean {
   assertSameRegistry(left, right);
 
   const { combinator } = left.registry;

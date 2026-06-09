@@ -21,7 +21,10 @@ export function add<
   TFlags extends string,
   TBit extends Bit,
   TBrand extends string | symbol,
->(flag: Flag<TFlags, TBit, TBrand>, ...names: TFlags[]) {
+>(
+  flag: Flag<TFlags, TBit, TBrand>,
+  ...names: TFlags[]
+): Flag<TFlags, TBit, TBrand> {
   const { registry } = flag;
   const { repository, combinator } = registry;
 

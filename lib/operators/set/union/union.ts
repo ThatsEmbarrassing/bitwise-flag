@@ -20,10 +20,14 @@ import type { Flag } from "@/flags/types";
  * result.has("execute"); // true
  * result.has("admin");   // false
  */
-export function union<TFlags extends string, TBit extends Bit>(
-  left: Flag<TFlags, TBit>,
-  ...other: Flag<TFlags, TBit>[]
-) {
+export function union<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(
+  left: Flag<TFlags, TBit, TBrand>,
+  ...other: Flag<TFlags, TBit, TBrand>[]
+): Flag<TFlags, TBit, TBrand> {
   assertSameRegistry(left, ...other);
 
   const { combinator } = left.registry;

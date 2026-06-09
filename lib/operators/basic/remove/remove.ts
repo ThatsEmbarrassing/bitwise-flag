@@ -17,10 +17,14 @@ import type { Flag } from "@/flags/types";
  * result.has("write");   // false
  * result.has("execute"); // true
  */
-export function remove<TFlags extends string, TBit extends Bit>(
-  flagBox: Flag<TFlags, TBit>,
+export function remove<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(
+  flagBox: Flag<TFlags, TBit, TBrand>,
   ...flags: TFlags[]
-) {
+): Flag<TFlags, TBit, TBrand> {
   const { registry } = flagBox;
   const { repository, combinator } = registry;
 

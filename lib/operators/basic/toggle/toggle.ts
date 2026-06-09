@@ -17,10 +17,14 @@ import type { Flag } from "@/flags/types";
  * result.has("write");   // false — was present, removed
  * result.has("execute"); // true  — was absent, added
  */
-export function toggle<TFlags extends string, TBit extends Bit>(
-  flagBox: Flag<TFlags, TBit>,
+export function toggle<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(
+  flagBox: Flag<TFlags, TBit, TBrand>,
   ...flags: TFlags[]
-) {
+): Flag<TFlags, TBit, TBrand> {
   const { repository, combinator } = flagBox.registry;
 
   const bits = flags

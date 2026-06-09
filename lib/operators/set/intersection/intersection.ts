@@ -23,7 +23,10 @@ export function intersection<
   TFlags extends string,
   TBit extends Bit,
   TBrand extends string | symbol,
->(first: Flag<TFlags, TBit, TBrand>, ...rest: Flag<TFlags, TBit, TBrand>[]) {
+>(
+  first: Flag<TFlags, TBit, TBrand>,
+  ...rest: Flag<TFlags, TBit, TBrand>[]
+): Flag<TFlags, TBit, TBrand> {
   assertSameRegistry(first, ...rest);
 
   const { combinator } = first.registry;

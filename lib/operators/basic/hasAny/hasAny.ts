@@ -13,6 +13,6 @@ import type { Flag } from "@/flags/types";
 export function hasAny<TFlags extends string, TBit extends Bit>(
   flagBox: Flag<TFlags, TBit>,
   ...flags: TFlags[]
-) {
+): boolean {
   return flags.some((key) => flagBox.has(key));
 }

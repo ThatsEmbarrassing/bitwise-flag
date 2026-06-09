@@ -19,7 +19,7 @@ import type { Flag, FlagRegistry } from "./flags";
  *
  * @deprecated Use {@link BigIntFlagRegistry} (or {@link NumberFlagRegistry}).
  */
-export const FlagsRegistry = BigIntFlagRegistry;
+export const FlagsRegistry: typeof BigIntFlagRegistry = BigIntFlagRegistry;
 
 /**
  * Type alias for the 1.1.0 registry (which was bigint-only).

@@ -18,9 +18,11 @@ import type { Flag } from "@/flags/types";
  * result.has("execute"); // true
  * result.has("admin");   // true
  */
-export function complement<TFlags extends string, TBit extends Bit>(
-  flag: Flag<TFlags, TBit>,
-) {
+export function complement<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(flag: Flag<TFlags, TBit, TBrand>): Flag<TFlags, TBit, TBrand> {
   const { registry } = flag;
   const { combinator } = registry;
 

@@ -25,7 +25,7 @@ export abstract class AbstractFlagRegistry<
    * @param flags array with flag names.
    * @returns true if the array has duplicates and false otherwise.
    */
-  protected static hasDuplicates(flags: string[]) {
+  protected static hasDuplicates(flags: string[]): boolean {
     return new Set(flags).size !== flags.length;
   }
 
@@ -37,7 +37,7 @@ export abstract class AbstractFlagRegistry<
    * @param flags array with flag names.
    * @returns array with all duplicates.
    */
-  protected static findDuplicates(flags: string[]) {
+  protected static findDuplicates(flags: string[]): string[] {
     return flags.filter((item, index) => flags.indexOf(item) !== index);
   }
 

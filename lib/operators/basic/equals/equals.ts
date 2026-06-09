@@ -17,6 +17,6 @@ import type { Flag } from "@/flags/types";
 export function equals<TFlags extends string, TBit extends Bit>(
   left: Flag<TFlags, TBit>,
   right: Flag<TFlags, TBit>,
-) {
+): boolean {
   return left.registry === right.registry && left.bits === right.bits;
 }
