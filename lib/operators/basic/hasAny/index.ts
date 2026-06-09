@@ -1,0 +1,1 @@
+export { hasAny } from "./hasAny";

@@ -2,11 +2,15 @@
     "$schema": "https://typedoc.org/schema.json",
     "name": "bitwise-flag",
     "entryPoints": [
-        "lib/index.ts",
-        "lib/Flag.ts",
-        "lib/FlagRegistry.ts",
+        "./lib/core/index.ts",
+        "./lib/flags/index.ts",
+        "./lib/operators/index.ts"
     ],
+    "tsconfig": "./tsconfig.typedoc.json",
     "theme": "hierarchy",
+    "projectDocuments": [
+        "./lib/**/*.md"
+    ],
     "plugin": [
         "typedoc-theme-hierarchy",
         "typedoc-plugin-extras"

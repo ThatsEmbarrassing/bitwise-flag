@@ -1,8 +1,7 @@
 {
   "name": "bitwise-flag",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "type": "module",
-  "license": "MIT",
   "files": [
     "./dist/*.js",
     "./dist/*.d.ts",
@@ -10,10 +9,6 @@
     "./LICENSE.md",
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ThatsEmbarrassing/bitwise-flag"
-  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +23,62 @@
         "default": "./dist/index.js"
       }
     },
+    "./operators": {
+      "require": {
+        "types": "./dist/operators/index.d.cts",
+        "default": "./dist/operators/index.cjs"
+      },
+      "import": {
+        "types": "./dist/operators/index.d.ts",
+        "default": "./dist/operators/index.js"
+      }
+    },
+    "./operators/basic": {
+      "require": {
+        "types": "./dist/operators/basic/index.d.cts",
+        "default": "./dist/operators/basic/index.cjs"
+      },
+      "import": {
+        "types": "./dist/operators/basic/index.d.ts",
+        "default": "./dist/operators/basic/index.js"
+      }
+    },
+    "./operators/set": {
+      "require": {
+        "types": "./dist/operators/set/index.d.cts",
+        "default": "./dist/operators/set/index.cjs"
+      },
+      "import": {
+        "types": "./dist/operators/set/index.d.ts",
+        "default": "./dist/operators/set/index.js"
+      }
+    },
+    "./operators/utils": {
+      "require": {
+        "types": "./dist/operators/utils/index.d.cts",
+        "default": "./dist/operators/utils/index.cjs"
+      },
+      "import": {
+        "types": "./dist/operators/utils/index.d.ts",
+        "default": "./dist/operators/utils/index.js"
+      }
+    },
+    "./operators/errors": {
+      "require": {
+        "types": "./dist/operators/errors/index.d.cts",
+        "default": "./dist/operators/errors/index.cjs"
+      },
+      "import": {
+        "types": "./dist/operators/errors/index.d.ts",
+        "default": "./dist/operators/errors/index.js"
+      }
+    },
     "./package.json": "./package.json"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThatsEmbarrassing/bitwise-flag"
   },
   "author": "Ember",
   "scripts": {

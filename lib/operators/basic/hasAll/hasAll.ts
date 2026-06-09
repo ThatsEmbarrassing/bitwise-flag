@@ -1,0 +1,18 @@
+import type { Bit } from "@/core/types";
+
+import type { Flag } from "@/flags/types";
+
+/**
+ * Returns `true` only if the flag box contains ALL of the specified flags.
+ *
+ * @example
+ * const box = registry.of("read", "write");
+ * hasAll(box, "read", "write");   // true
+ * hasAll(box, "read", "execute"); // false — "execute" is missing
+ */
+export function hasAll<TFlags extends string, TBit extends Bit>(
+  flagBox: Flag<TFlags, TBit>,
+  ...flags: TFlags[]
+) {
+  return flags.every((key) => flagBox.has(key));
+}

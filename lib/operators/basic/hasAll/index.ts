@@ -1,0 +1,1 @@
+export { hasAll } from "./hasAll";

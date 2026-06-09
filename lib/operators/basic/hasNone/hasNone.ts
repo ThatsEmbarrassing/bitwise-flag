@@ -1,0 +1,18 @@
+import type { Bit } from "@/core/types";
+
+import type { Flag } from "@/flags/types";
+
+/**
+ * Returns `true` if the flag box contains none of the specified flags.
+ *
+ * @example
+ * const box = registry.of("read");
+ * hasNone(box, "write", "admin"); // true  — neither is set
+ * hasNone(box, "read", "write");  // false — "read" is set
+ */
+export function hasNone<TFlags extends string, TBit extends Bit>(
+  flagBox: Flag<TFlags, TBit>,
+  ...flags: TFlags[]
+) {
+  return !flags.some((key) => flagBox.has(key));
+}

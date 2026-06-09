@@ -1,0 +1,1 @@
+export { assertSameRegistry } from "./assertSameRegistry";
