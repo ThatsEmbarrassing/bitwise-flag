@@ -1,5 +1,14 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+> Changelog keeping starts with version **2.0.0**. Earlier releases (`1.1.0` and
+> below) predate this file and are not documented here. For step-by-step upgrade
+> instructions see [MIGRATIONS.md](./MIGRATIONS.md).
+
 ## 2.0.1
 
 ### Patch Changes
@@ -9,15 +18,6 @@
 - 19ca804: Fix `Repository.has()` to report presence by key registration instead of coercing the stored bit value, so flags with a falsy (`0` / `0n`) value are no longer treated as absent.
 - b2340de: Fix package metadata; add sideEffects, commitlint and git hooks; normalize repository URL
 - 91de837: Add npm discoverability metadata: `description`, `keywords` and `homepage`.
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-> Changelog keeping starts with version **2.0.0**. Earlier releases (`1.1.0` and
-> below) predate this file and are not documented here. For step-by-step upgrade
-> instructions see [MIGRATIONS.md](./MIGRATIONS.md).
 
 ## [2.0.0] - 2026-06-09
 
