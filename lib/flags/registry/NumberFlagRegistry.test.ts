@@ -311,7 +311,7 @@ describe("NumberFlagRegistry#parse() — string input", () => {
     // input: "" -> Number("") === 0 but trim leaves "" which Number converts to 0
     // Actually "" -> 0, which is valid parse but has no unknown bits -> empty flag
     // Documenting actual behaviour: "" parses as 0 (empty flag)
-    expect(registry.parse("").isEmpty()).toBe(true);
+    expect(() => registry.parse("")).toThrow(ParseError);
   });
 
   test("throws UnknownBitsError for a string representing bits not in the registry", () => {
