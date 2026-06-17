@@ -43,6 +43,26 @@ export class NumberFlagRegistry<
    */
   public readonly repository: Repository<TFlags, number>;
 
+  private coerceNumber(value: number): number {
+    if (!Number.isInteger(value) || value < 0 || Number.isNaN(value)) {
+      throw new ParseError(value);
+    }
+
+    return value;
+  }
+
+  private coerceString(value: string): number {
+    const normalized = value.trim();
+
+    if (normalized.length === 0) {
+      throw new ParseError(value);
+    }
+
+    const num = Number(normalized);
+
+    return this.coerceNumber(num);
+  }
+
   /**
    * Converts a raw value or string representation into the registry's native bit type `TBit`.
    *
@@ -52,22 +72,11 @@ export class NumberFlagRegistry<
    * @returns The parsed value as `TBit`.
    * @throws {@link ParseError} if `value` cannot be converted to a valid non-negative `TBit`.
    */
+
   protected coerce(value: number | string): number {
-    if (typeof value === "number") {
-      if (!Number.isInteger(value) || value < 0) {
-        throw new ParseError(value);
-      }
+    if (typeof value === "number") return this.coerceNumber(value);
 
-      return value;
-    }
-
-    const n = Number(value.trim());
-
-    if (!Number.isInteger(n) || n < 0 || Number.isNaN(n)) {
-      throw new ParseError(value);
-    }
-
-    return n;
+    return this.coerceString(value);
   }
 
   /**
