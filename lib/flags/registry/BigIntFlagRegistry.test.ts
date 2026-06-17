@@ -261,11 +261,6 @@ describe("BigIntFlagRegistry#parse() — string input", () => {
     expect(flag.has("read")).toBe(true);
   });
 
-  test("parses an empty string as 0n (empty flag)", () => {
-    // BigInt("") === 0n in this runtime, so "" round-trips to an empty flag — same as NumberFlagRegistry
-    expect(registry.parse("").isEmpty()).toBe(true);
-  });
-
   test("throws ParseError for a string that is not a number", () => {
     // input: "abc" -> BigInt("abc") throws -> ParseError
     expect(() => registry.parse("abc")).toThrow(ParseError);
@@ -292,9 +287,9 @@ describe("BigIntFlagRegistry#parse() — string input", () => {
     expect(() => registry.parse("32")).toThrow(UnknownBitsError);
   });
 
-  test("parses a whitespace-only string as 0n (empty flag)", () => {
+  test("throws ParseError for an empty string", () => {
     // trim -> "" -> BigInt("") === 0n, so "   " round-trips to an empty flag
-    expect(registry.parse("   ").isEmpty()).toBe(true);
+    expect(() => registry.parse("   ")).toThrow(ParseError);
   });
 });
 
