@@ -14,6 +14,8 @@ import { AbstractFlagRegistry } from "./AbstractFlagRegistry";
 import type { Combinator } from "@/core";
 import type { FlagRegistry } from "../types";
 
+const BIGINT_COMBINATOR = new BigIntCombinator();
+
 export class BigIntFlagRegistry<
   TFlags extends string,
   TBrand extends string | symbol = symbol,
@@ -22,7 +24,7 @@ export class BigIntFlagRegistry<
    * The bitwise combinator used internally to perform AND, OR, NOT, and other
    * operations on values of type `TBit`.
    */
-  public readonly combinator: Combinator<bigint>;
+  public readonly combinator: Combinator<bigint> = BIGINT_COMBINATOR;
 
   /**
    * The underlying read-only store that maps flag names to their bit values.
@@ -91,8 +93,6 @@ export class BigIntFlagRegistry<
 
   private constructor(flags: Map<TFlags, bigint>) {
     super();
-
-    this.combinator = new BigIntCombinator();
 
     this.validateFlags(flags);
 
