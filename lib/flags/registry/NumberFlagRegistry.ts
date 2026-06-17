@@ -15,6 +15,8 @@ import { AbstractFlagRegistry } from "./AbstractFlagRegistry";
 import type { Combinator } from "@/core";
 import type { FlagRegistry } from "../types";
 
+const NUMBER_COMBINATOR = new NumberCombinator();
+
 export class NumberFlagRegistry<
   TFlags extends string,
   TBrand extends string | symbol = symbol,
@@ -34,7 +36,7 @@ export class NumberFlagRegistry<
    * The bitwise combinator used internally to perform AND, OR, NOT, and other
    * operations on values of type `TBit`.
    */
-  public readonly combinator: Combinator<number>;
+  public readonly combinator: Combinator<number> = NUMBER_COMBINATOR;
 
   /**
    * The underlying read-only store that maps flag names to their bit values.
@@ -111,8 +113,6 @@ export class NumberFlagRegistry<
 
   private constructor(flags: Map<TFlags, number>) {
     super();
-
-    this.combinator = new NumberCombinator();
 
     this.validateFlags(flags);
 
