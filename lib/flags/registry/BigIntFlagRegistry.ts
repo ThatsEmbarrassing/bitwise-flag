@@ -66,6 +66,32 @@ export class BigIntFlagRegistry<
     }
   }
 
+  private coerceBigint(value: bigint): bigint {
+    if (value < 0n) {
+      throw new ParseError(value);
+    }
+
+    return value;
+  }
+
+  private coerceString(value: string): bigint {
+    const normalized = value.trim();
+
+    if (normalized.length === 0) {
+      throw new ParseError(value);
+    }
+
+    try {
+      const num = BigInt(normalized);
+
+      return this.coerceBigint(num);
+    } catch (e) {
+      if (e instanceof ParseError) throw e;
+
+      throw new ParseError(value);
+    }
+  }
+
   /**
    * Converts a raw value or string representation into the registry's native bit type `TBit`.
    *
@@ -76,19 +102,9 @@ export class BigIntFlagRegistry<
    * @throws {@link ParseError} if `value` cannot be converted to a valid non-negative `TBit`.
    */
   protected coerce(value: bigint | string): bigint {
-    if (typeof value === "bigint") {
-      if (value < 0n) throw new ParseError(value);
-      return value;
-    }
-    try {
-      const n = BigInt(value.trim());
-      if (n < 0n) throw new ParseError(value);
-      return n;
-    } catch (e) {
-      if (e instanceof ParseError) throw e;
+    if (typeof value === "bigint") return this.coerceBigint(value);
 
-      throw new ParseError(value);
-    }
+    return this.coerceString(value);
   }
 
   private constructor(flags: Map<TFlags, bigint>) {
