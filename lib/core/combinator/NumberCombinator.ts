@@ -14,7 +14,7 @@ import type { Combinator } from "./types";
  */
 export class NumberCombinator implements Combinator<number> {
   /** Neutral element for bitwise OR — a `number` with no bits set. */
-  zero: number = 0;
+  readonly zero: number = 0;
 
   /**
    * Counts the number of set bits (population count) in `a`.
