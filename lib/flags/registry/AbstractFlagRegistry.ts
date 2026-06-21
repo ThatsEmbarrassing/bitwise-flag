@@ -1,5 +1,8 @@
+import { computeMask } from "@/core/utils";
+
 import { FlagBox } from "../box";
 import { UnknownBitsError } from "../errors";
+import { resolveMask } from "../utils";
 
 import type { Bit, Combinator } from "@/core";
 
@@ -14,7 +17,8 @@ export abstract class AbstractFlagRegistry<
   TFlags extends string,
   TBit extends Bit,
   TBrand extends string | symbol = symbol,
-> implements FlagRegistry<TFlags, TBit, TBrand> {
+> implements FlagRegistry<TFlags, TBit, TBrand>
+{
   private _fullBits: TBit | null = null;
 
   /**
@@ -114,7 +118,7 @@ export abstract class AbstractFlagRegistry<
     const bits = this.coerce(value);
 
     this.validateBits(bits);
-    
+
     return new FlagBox(bits, this);
   }
 
@@ -133,9 +137,7 @@ export abstract class AbstractFlagRegistry<
    * ```
    */
   of(...flags: TFlags[]): Flag<TFlags, TBit, TBrand> {
-    const bits = flags
-      .map((key) => this.repository.get(key))
-      .reduce((acc, v) => this.combinator.or(acc, v), this.combinator.zero);
+    const bits = resolveMask(this, flags);
 
     return new FlagBox(bits, this);
   }
@@ -253,11 +255,7 @@ export abstract class AbstractFlagRegistry<
    * ```
    */
   get fullBits(): TBit {
-    if (this._fullBits === null) {
-      this._fullBits = this.repository
-        .values()
-        .reduce((acc, v) => this.combinator.or(acc, v), this.combinator.zero);
-    }
+    this._fullBits ??= computeMask(this.combinator, this.repository.values());
 
     return this._fullBits;
   }
