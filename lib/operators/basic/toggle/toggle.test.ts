@@ -93,24 +93,24 @@ describe("toggle", () => {
       expect(result.bits).toBe(box.bits);
     });
 
-    test("toggling the same flag twice in one call cancels out", () => {
+    test("toggling the same flag twice in one call doesn't cancel out", () => {
       // input: box with "read", pass "write" twice in a single call
-      // expected: "write" not set (XOR cancels), size unchanged
+      // expected: "write" set
       const box = registry.of("read");
       const result = toggle(box, "write", "write");
 
-      expect(result.has("write")).toBe(false);
-      expect(result.bits).toBe(box.bits);
+      expect(result.has("write")).toBeTrue();
+      expect(result.bits).not.toBe(box.bits);
     });
 
-    test("toggling a present flag twice in one call leaves it set", () => {
+    test("toggling a present flag twice in one call toggles it once (set semantics)", () => {
       // input: box with "read", pass "read" twice
       // expected: "read" still set
       const box = registry.of("read");
       const result = toggle(box, "read", "read");
 
-      expect(result.has("read")).toBe(true);
-      expect(result.bits).toBe(box.bits);
+      expect(result.has("read")).toBeFalse();
+      expect(result.isEmpty()).toBeTrue();
     });
   });
 
