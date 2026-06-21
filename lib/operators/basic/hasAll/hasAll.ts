@@ -1,3 +1,5 @@
+import { resolveMask } from "@/flags/utils";
+
 import type { Bit } from "@/core/types";
 
 import type { Flag } from "@/flags/types";
@@ -10,10 +12,13 @@ import type { Flag } from "@/flags/types";
  * hasAll(box, "read", "write");   // true
  * hasAll(box, "read", "execute"); // false — "execute" is missing
  */
-export function hasAll<
-  TFlags extends string,
-  TBit extends Bit,
-  TBrand extends string | symbol,
->(flagBox: Flag<TFlags, TBit, TBrand>, ...flags: TFlags[]): boolean {
-  return flags.every((key) => flagBox.has(key));
+export function hasAll<TFlags extends string, TBit extends Bit>(
+  flagBox: Flag<TFlags, TBit>,
+  ...flags: TFlags[]
+): boolean {
+  const { registry, bits } = flagBox;
+  const { combinator } = registry;
+
+  const mask = resolveMask(registry, flags);
+  return combinator.and(bits, mask) === mask;
 }
