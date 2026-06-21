@@ -26,11 +26,11 @@ export function remove<
   flag: Flag<TFlags, TBit, TBrand>,
   ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
-  const { registry } = flagBox;
+  const { registry } = flag;
   const { combinator } = registry;
 
-  const mask = resolveMask(registry, flags);
-  const bits = combinator.andNot(flagBox.bits, mask);
+  const mask = resolveMask(registry, names);
+  const bits = combinator.andNot(flag.bits, mask);
 
   return new FlagBox(bits, registry);
 }

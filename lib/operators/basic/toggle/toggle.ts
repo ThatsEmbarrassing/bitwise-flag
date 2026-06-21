@@ -1,4 +1,5 @@
 import { FlagBox } from "@/flags/box";
+import { resolveMask } from "@/flags/utils";
 
 import type { Bit } from "@/core/types";
 
@@ -25,15 +26,11 @@ export function toggle<
   flag: Flag<TFlags, TBit, TBrand>,
   ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
-  const { repository, combinator } = flag.registry;
+  const { registry } = flag;
+  const { combinator } = registry;
 
-  let bits = flag.bits;
-
-  for (const nameItem of names) {
-    const value = repository.get(nameItem);
-
-    bits = combinator.xor(bits, value);
-  }
+  const mask = resolveMask(registry, names);
+  const bits = combinator.xor(flag.bits, mask);
 
   return new FlagBox(bits, flag.registry);
 }
