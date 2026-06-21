@@ -1,4 +1,5 @@
 import { FlagBox } from "@/flags/box";
+import { resolveMask } from "@/flags/utils";
 
 import type { Bit } from "@/core/types";
 
@@ -25,16 +26,11 @@ export function remove<
   flag: Flag<TFlags, TBit, TBrand>,
   ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
-  const { registry } = flag;
-  const { repository, combinator } = registry;
+  const { registry } = flagBox;
+  const { combinator } = registry;
 
-  let bits = flag.bits;
-
-  for (const nameItem of names) {
-    const value = repository.get(nameItem);
-
-    bits = combinator.andNot(bits, value);
-  }
+  const mask = resolveMask(registry, flags);
+  const bits = combinator.andNot(flagBox.bits, mask);
 
   return new FlagBox(bits, registry);
 }
