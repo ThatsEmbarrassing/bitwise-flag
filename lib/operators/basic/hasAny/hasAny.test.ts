@@ -89,7 +89,7 @@ describe("hasAny", () => {
   describe("edge cases", () => {
     test("returns false when called with no flags (vacuous falsity)", () => {
       // input: any box, no flags passed
-      // expected: false — some() on an empty array always returns false
+      // expected: false
       expect(hasAny(registry.empty())).toBe(false);
       expect(hasAny(registry.of("read"))).toBe(false);
     });
@@ -163,7 +163,7 @@ describe("hasAny", () => {
 
     test("throws when unknown flag is first and box does not short-circuit", () => {
       // input: box without "read", flags "ghost" (unknown) then "read"
-      // expected: UnknownFlagError — some() does not short-circuit because no true yet
+      // expected: UnknownFlagError thrown
       const box = registry.empty();
 
       expect(() => hasAny(box, "ghost" as Perms, "read")).toThrow(
@@ -171,17 +171,19 @@ describe("hasAny", () => {
       );
     });
 
-    test("does not throw when a matching known flag precedes an unknown one", () => {
+    test("throws when a matching known flag precedes an unknown one", () => {
       // input: box with "read", flags "read" (present) then "ghost" (unknown)
-      // expected: true — some() short-circuits after "read" is found, never reaches "ghost"
+      // expected: UnknownFlagError thrown
       const box = registry.of("read");
 
-      expect(hasAny(box, "read", "ghost" as Perms)).toBe(true);
+      expect(() => hasAny(box, "read", "ghost" as Perms)).toThrow(
+        UnknownFlagError,
+      );
     });
 
     test("throws when unknown flag follows a known but absent flag", () => {
       // input: box with "admin", flags "read" (absent) then "ghost" (unknown)
-      // expected: UnknownFlagError — "read" is false so some() continues to "ghost"
+      // expected: UnknownFlagError thrown
       const box = registry.of("admin");
 
       expect(() => hasAny(box, "read", "ghost" as Perms)).toThrow(
