@@ -22,17 +22,19 @@ export function remove<
   TBit extends Bit,
   TBrand extends string | symbol,
 >(
-  flagBox: Flag<TFlags, TBit, TBrand>,
-  ...flags: TFlags[]
+  flag: Flag<TFlags, TBit, TBrand>,
+  ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
-  const { registry } = flagBox;
+  const { registry } = flag;
   const { repository, combinator } = registry;
 
-  const bits = flags
-    .map((key) => repository.get(key))
-    .reduce((acc, v) => {
-      return combinator.andNot(acc, v);
-    }, flagBox.bits);
+  let bits = flag.bits;
+
+  for (const nameItem of names) {
+    const value = repository.get(nameItem);
+
+    bits = combinator.andNot(bits, value);
+  }
 
   return new FlagBox(bits, registry);
 }
