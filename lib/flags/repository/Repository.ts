@@ -11,7 +11,15 @@ import type { Bit } from "@/core";
  * @typeParam TBit - The numeric primitive used for bit values (`number` or `bigint`).
  */
 export class Repository<TFlags extends string, TBit extends Bit> {
-  constructor(private flags: Map<TFlags, TBit>) {}
+  readonly #keys: readonly TFlags[];
+  readonly #values: readonly TBit[];
+  readonly #entries: ReadonlyArray<[TFlags, TBit]>;
+
+  constructor(private flags: Map<TFlags, TBit>) {
+    this.#keys = [...flags.keys()];
+    this.#values = [...flags.values()];
+    this.#entries = [...flags.entries()];
+  }
 
   /**
    * Returns the bit value for the given flag name.
@@ -54,16 +62,16 @@ export class Repository<TFlags extends string, TBit extends Bit> {
 
   /** Returns all registered flag names. */
   keys(): TFlags[] {
-    return this.flags.keys().toArray();
+    return this.#keys.slice();
   }
 
   /** Returns all registered bit values. */
   values(): TBit[] {
-    return this.flags.values().toArray();
+    return this.#values.slice();
   }
 
   /** Returns all `[name, bit]` pairs for registered flags. */
   entries(): [TFlags, TBit][] {
-    return this.flags.entries().toArray();
+    return this.#entries.slice();
   }
 }
