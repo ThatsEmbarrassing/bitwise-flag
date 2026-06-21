@@ -5,7 +5,8 @@ export class FlagBox<
   TFlags extends string,
   TBit extends Bit,
   TBrand extends string | symbol,
-> implements Flag<TFlags, TBit, TBrand> {
+> implements Flag<TFlags, TBit, TBrand>
+{
   /**
    * @internal Do not use. Exists only at the type level — never present at runtime.
    *
@@ -66,10 +67,17 @@ export class FlagBox<
    * ```
    */
   toArray(): TFlags[] {
-    return this.registry.repository
-      .entries()
-      .filter(([_, value]) => !!this.registry.combinator.and(this.bits, value))
-      .map(([key, _]) => key as TFlags);
+    const out = [] as TFlags[];
+
+    const { combinator } = this.registry;
+
+    for (const [key, value] of this.registry.repository.entries()) {
+      if (combinator.and(this.bits, value) === combinator.zero) continue;
+
+      out.push(key);
+    }
+
+    return out;
   }
 
   /**
@@ -100,14 +108,17 @@ export class FlagBox<
    * ```
    */
   toObject(): Record<TFlags, boolean> {
-    return Object.fromEntries(
-      this.registry.repository
-        .entries()
-        .map(([key, value]) => [
-          key,
-          !!this.registry.combinator.and(this.bits, value),
-        ]),
-    ) as Record<TFlags, boolean>;
+    const out = {} as Record<TFlags, boolean>;
+
+    const { combinator } = this.registry;
+
+    for (const [key, value] of this.registry.repository.entries()) {
+      const isSet = combinator.and(this.bits, value) !== combinator.zero;
+
+      out[key] = isSet;
+    }
+
+    return out;
   }
 
   /**
