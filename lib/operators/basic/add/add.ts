@@ -1,4 +1,5 @@
 import { FlagBox } from "@/flags/box";
+import { resolveMask } from "@/flags/utils";
 
 import type { Bit } from "@/core/types";
 
@@ -26,15 +27,10 @@ export function add<
   ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
   const { registry } = flag;
-  const { repository, combinator } = registry;
+  const { combinator } = registry;
 
-  let bits = flag.bits;
-
-  for (const nameItem of names) {
-    const value = repository.get(nameItem);
-
-    bits = combinator.or(bits, value);
-  }
+  const mask = resolveMask(registry, names);
+  const bits = combinator.or(flag.bits, mask);
 
   return new FlagBox(bits, registry);
 }
