@@ -28,9 +28,13 @@ export function add<
   const { registry } = flag;
   const { repository, combinator } = registry;
 
-  const bits = names
-    .map((key) => repository.get(key))
-    .reduce((acc, v) => combinator.or(acc, v), flag.bits);
+  let bits = flag.bits;
+
+  for (const nameItem of names) {
+    const value = repository.get(nameItem);
+
+    bits = combinator.or(bits, value);
+  }
 
   return new FlagBox(bits, registry);
 }
