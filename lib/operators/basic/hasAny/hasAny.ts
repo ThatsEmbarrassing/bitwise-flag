@@ -10,9 +10,10 @@ import type { Flag } from "@/flags/types";
  * hasAny(box, "read", "admin");  // true  — "read" is set
  * hasAny(box, "write", "admin"); // false — neither is set
  */
-export function hasAny<TFlags extends string, TBit extends Bit>(
-  flagBox: Flag<TFlags, TBit>,
-  ...flags: TFlags[]
-): boolean {
+export function hasAny<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(flagBox: Flag<TFlags, TBit, TBrand>, ...flags: TFlags[]): boolean {
   return flags.some((key) => flagBox.has(key));
 }
