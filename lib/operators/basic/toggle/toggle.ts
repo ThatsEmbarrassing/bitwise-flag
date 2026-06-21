@@ -22,14 +22,18 @@ export function toggle<
   TBit extends Bit,
   TBrand extends string | symbol,
 >(
-  flagBox: Flag<TFlags, TBit, TBrand>,
-  ...flags: TFlags[]
+  flag: Flag<TFlags, TBit, TBrand>,
+  ...names: TFlags[]
 ): Flag<TFlags, TBit, TBrand> {
-  const { repository, combinator } = flagBox.registry;
+  const { repository, combinator } = flag.registry;
 
-  const bits = flags
-    .map((key) => repository.get(key))
-    .reduce((acc, v) => combinator.xor(acc, v), flagBox.bits);
+  let bits = flag.bits;
 
-  return new FlagBox(bits, flagBox.registry);
+  for (const nameItem of names) {
+    const value = repository.get(nameItem);
+
+    bits = combinator.xor(bits, value);
+  }
+
+  return new FlagBox(bits, flag.registry);
 }
