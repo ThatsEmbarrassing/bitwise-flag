@@ -14,9 +14,13 @@ import type { Flag } from "@/flags/types";
  * const other = NumberFlagRegistry.from("read", "write");
  * equals(a, other.of("read", "write")); // false — different registry instance
  */
-export function equals<TFlags extends string, TBit extends Bit>(
-  left: Flag<TFlags, TBit>,
-  right: Flag<TFlags, TBit>,
+export function equals<
+  TFlags extends string,
+  TBit extends Bit,
+  TBrand extends string | symbol,
+>(
+  left: Flag<TFlags, TBit, TBrand>,
+  right: Flag<TFlags, TBit, TBrand>,
 ): boolean {
   return left.registry === right.registry && left.bits === right.bits;
 }
