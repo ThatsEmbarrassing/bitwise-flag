@@ -99,7 +99,7 @@ describe("hasNone", () => {
   describe("edge cases", () => {
     test("returns true when called with no flags (vacuous truth)", () => {
       // input: any box, no flags passed
-      // expected: true — some() on an empty array returns false, so !false === true
+      // expected: true
       expect(hasNone(registry.empty())).toBe(true);
       expect(hasNone(registry.of("read"))).toBe(true);
       expect(hasNone(registry.full())).toBe(true);
@@ -157,7 +157,9 @@ describe("hasNone", () => {
       // expected: UnknownFlagError thrown
       const box = registry.of("read");
 
-      expect(() => hasNone(box, "superuser" as Perms)).toThrow(UnknownFlagError);
+      expect(() => hasNone(box, "superuser" as Perms)).toThrow(
+        UnknownFlagError,
+      );
     });
 
     test("throws UnknownFlagError with the offending flag name", () => {
@@ -176,7 +178,7 @@ describe("hasNone", () => {
 
     test("throws when unknown flag follows a known but absent flag", () => {
       // input: box with "admin", flags "read" (absent) then "ghost" (unknown)
-      // expected: UnknownFlagError — "read" is false so some() continues to "ghost"
+      // expected: UnknownFlagError thrown
       const box = registry.of("admin");
 
       expect(() => hasNone(box, "read", "ghost" as Perms)).toThrow(
@@ -184,17 +186,19 @@ describe("hasNone", () => {
       );
     });
 
-    test("does not throw when a present known flag precedes an unknown one", () => {
+    test("throws when a present known flag precedes an unknown one", () => {
       // input: box with "read", flags "read" (present) then "ghost" (unknown)
-      // expected: false — some() short-circuits after finding "read", never reaches "ghost"
+      // expected: UnknownFlagError thrown
       const box = registry.of("read");
 
-      expect(hasNone(box, "read", "ghost" as Perms)).toBe(false);
+      expect(() => hasNone(box, "read", "ghost" as Perms)).toThrow(
+        UnknownFlagError,
+      );
     });
 
     test("throws when unknown flag is first and box does not short-circuit", () => {
       // input: empty box, flags "ghost" (unknown) then "read"
-      // expected: UnknownFlagError — some() does not short-circuit because no true yet
+      // expected: UnknownFlagError thrown
       const box = registry.empty();
 
       expect(() => hasNone(box, "ghost" as Perms, "read")).toThrow(
