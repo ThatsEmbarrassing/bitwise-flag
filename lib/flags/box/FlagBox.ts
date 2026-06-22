@@ -122,6 +122,15 @@ export class FlagBox<
   }
 
   /**
+   * Serializes the flag set to its string representation.
+   *
+   * @returns The underlying bitmask as a string.
+   */
+  toJSON(): string {
+    return this.bits.toString();
+  }
+
+  /**
    * Returns `true` if the specified flag is currently set.
    *
    * @param flag - The flag name to test.
