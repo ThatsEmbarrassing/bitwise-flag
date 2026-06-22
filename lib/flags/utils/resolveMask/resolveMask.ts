@@ -32,7 +32,10 @@ export function resolveMask<
   TFlags extends string,
   TBit extends Bit,
   TBrand extends string | symbol,
->(registry: FlagRegistry<TFlags, TBit, TBrand>, names: readonly TFlags[]) {
+>(
+  registry: FlagRegistry<TFlags, TBit, TBrand>,
+  names: readonly TFlags[],
+): TBit {
   const { combinator, repository } = registry;
 
   const bits = names.map((key) => repository.get(key));
