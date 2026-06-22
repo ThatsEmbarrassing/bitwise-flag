@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > below) predate this file and are not documented here. For step-by-step upgrade
 > instructions see [MIGRATIONS.md](./MIGRATIONS.md).
 
+## 2.1.0
+
+### Minor Changes
+
+- e7c5583: add new `toJSON` method in `FlagBox` and `Flag`
+- b9e0d66: Add `resolveMask` utility, which resolves an array of flag names to their combined bit mask via the registry's combinator. `add`, `remove`, `toggle`, `hasAll`, `hasAny` and `hasNone` now use it internally instead of manual iteration.
+
+  BREAKING CHANGE: passing the same flag twice in one call now does NOT
+  cancel it: `toggle(flag, "a", "a", "b") !== toggle(flag, "b")`. Now it
+  just toggles it once: `toggle(flag, "a", "a", "b") === toggle(flag, "a",
+"b")`.
+
+### Patch Changes
+
+- 7e8399f: Add `TBrand` generic type to `hasAll`, `hasAny`, `hasNone` and `equals` operators
+- 7f9dced: Fix `NumberCombinator` typing to make `zero` property readonly.
+- be50bd7: `Repository` now caches `keys()`, `values()` and `entries()` accessors in the constructor instead of re-creating them from the `Map` on every call.
+  `FlagBox.toArray()` and `FlagBox.toObject()` now iterate directly instead of chaining callbacks
+- 53ac337: Both `BigIntFlagRegistry` and `NumberFlagRegistry` now share a single `Combinator` instance at the module level instead of allocation a new one per registry instance.
+- c90c94a: Fix both `NumberFlagRegistry.parse()` and `BigIntFlagRegistry.parse()` to throw ParseError for empty-string input instrad of silently returning the empty flag.
+
 ## 2.0.1
 
 ### Patch Changes
