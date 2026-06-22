@@ -9,6 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > below) predate this file and are not documented here. For step-by-step upgrade
 > instructions see [MIGRATIONS.md](./MIGRATIONS.md).
 
+## 2.1.0
+
+### Minor Changes
+
+- e7c5583: add new `toJSON` method in `FlagBox` and `Flag`
+- b9e0d66: Add `resolveMask` utility, which resolves an array of flag names to their combined bit mask via the registry's combinator. `add`, `remove`, `toggle`, `hasAll`, `hasAny` and `hasNone` now use it internally instead of manual iteration.
+
+  BREAKING CHANGE: passing the same flag twice in one call now does NOT
+  cancel it: `toggle(flag, "a", "a", "b") !== toggle(flag, "b")`. Now it
+  just toggles it once: `toggle(flag, "a", "a", "b") === toggle(flag, "a",
+"b")`.
+
+### Patch Changes
+
+- 7e8399f: Add `TBrand` generic type to `hasAll`, `hasAny`, `hasNone` and `equals` operators
+- 7f9dced: Fix `NumberCombinator` typing to make `zero` property readonly.
+- be50bd7: `Repository` now caches `keys()`, `values()` and `entries()` accessors in the constructor instead of re-creating them from the `Map` on every call.
+  `FlagBox.toArray()` and `FlagBox.toObject()` now iterate directly instead of chaining callbacks
+- 53ac337: Both `BigIntFlagRegistry` and `NumberFlagRegistry` now share a single `Combinator` instance at the module level instead of allocation a new one per registry instance.
+- c90c94a: Fix both `NumberFlagRegistry.parse()` and `BigIntFlagRegistry.parse()` to throw ParseError for empty-string input instrad of silently returning the empty flag.
+
+## 2.0.1
+
+### Patch Changes
+
+- cc8f98d: Set minimal engines.node version to 22 (LTS).
+- 0b800dd: Change GITHUB_TOKEN to fine-granted RELEASE_TOKEN
+- 19ca804: Fix `Repository.has()` to report presence by key registration instead of coercing the stored bit value, so flags with a falsy (`0` / `0n`) value are no longer treated as absent.
+- b2340de: Fix package metadata; add sideEffects, commitlint and git hooks; normalize repository URL
+- 91de837: Add npm discoverability metadata: `description`, `keywords` and `homepage`.
+
 ## [2.0.0] - 2026-06-09
 
 Version 2.0.0 is a major rewrite. The single, bigint-only `FlagsRegistry` / `Flag`
@@ -233,10 +264,10 @@ import { NumberFlagRegistry } from "bitwise-flag";
 
 // Without branding — structurally identical, so flags are interchangeable
 const filePerms = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
-const netPerms  = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
+const netPerms = NumberFlagRegistry.from("READ", "WRITE", "EXECUTE");
 
 type FileFlag = ReturnType<typeof filePerms.of>;
-type NetFlag  = ReturnType<typeof netPerms.of>;
+type NetFlag = ReturnType<typeof netPerms.of>;
 
 declare function applyFilePerms(f: FileFlag): void;
 applyFilePerms(netPerms.of("READ")); // compiles — no protection
@@ -253,7 +284,7 @@ const netPerms2 = NumberFlagRegistry.from<
 >("READ", "WRITE", "EXECUTE");
 
 type FileFlag2 = ReturnType<typeof filePerms2.of>;
-type NetFlag2  = ReturnType<typeof netPerms2.of>;
+type NetFlag2 = ReturnType<typeof netPerms2.of>;
 
 declare function applyFilePerms2(f: FileFlag2): void;
 applyFilePerms2(netPerms2.of("READ")); // compile error — brands do not match
@@ -268,7 +299,7 @@ or share it across module boundaries:
 ```ts
 // Reusable branded type aliases
 type FileFlag = Flag<"READ" | "WRITE" | "EXECUTE", number, "FilePerms">;
-type NetFlag  = Flag<"READ" | "WRITE" | "EXECUTE", number, "NetPerms">;
+type NetFlag = Flag<"READ" | "WRITE" | "EXECUTE", number, "NetPerms">;
 ```
 
 ### Renamed properties and methods
