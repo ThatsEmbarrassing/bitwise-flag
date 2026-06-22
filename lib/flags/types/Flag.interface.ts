@@ -138,6 +138,13 @@ export interface Flag<
   toString(radix?: number): string;
 
   /**
+   * Serializes the flag set to its string representation.
+   *
+   * @returns The underlying bitmask as a string.
+   */
+  toJSON(): string;
+
+  /**
    * Returns `true` if the specified flag is currently set.
    *
    * @param flag - The flag name to test.
