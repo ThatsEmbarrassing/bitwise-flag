@@ -1,6 +1,6 @@
 {
   "name": "bitwise-flag",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "type": "module",
   "sideEffects": false,
   "description": "Type-safe, immutable bitwise flags for TypeScript — with named flags, human-readable aliases, and tree-shakeable operators. ",
